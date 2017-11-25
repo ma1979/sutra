@@ -137,108 +137,110 @@
 
 - 描画できた
 
-  - ​
+  - ![graph](https://github.com/ma1979/sutra/raw/master/20171125_JupyterNotebook/cap/Untitled%20%F0%9F%94%8A%202017-11-26%2004-46-44.png)
 
-- pandas のモジュールを使って Yahoo! の API から日経平均を取得する
 
-  - pandas を import する
+
+## pandas のモジュールを使って Yahoo! の API から日経平均を取得する
+
+- pandas を import する
+
+  - ```python
+    import datetime
+
+    import bokeh.plotting as bplt
+    import pandas.io.data as web
+    ```
+
+    - エラーが起きる
+
+      - ```python
+        ---------------------------------------------------------------------------
+        ImportError                               Traceback (most recent call last)
+        <ipython-input-15-afd494153e79> in <module>()
+              2 
+              3 import bokeh.plotting as bplt
+        ----> 4 import pandas.io.data as web
+
+        /opt/conda/lib/python3.6/site-packages/pandas/io/data.py in <module>()
+              1 raise ImportError(
+        ----> 2     "The pandas.io.data module is moved to a separate package "
+              3     "(pandas-datareader). After installing the pandas-datareader package "
+              4     "(https://github.com/pandas-dev/pandas-datareader), you can change "
+              5     "the import ``from pandas.io import data, wb`` to "
+
+        ImportError: The pandas.io.data module is moved to a separate package (pandas-datareader). After installing the pandas-datareader package (https://github.com/pandas-dev/pandas-datareader), you can change the import ``from pandas.io import data, wb`` to ``from pandas_datareader import data, wb``.
+        ```
+
+      - pandas は別途インストールが必要になったみたい
+
+        - コンテナに入って pandas_datareader をインストールしておく
+
+          - ```shell
+            $ docker exec -it notebook bash
+            ```
+
+          - ```shell
+            $ conda install -c https://conda.anaconda.org/anaconda pandas-datareader
+            ```
 
     - ```python
       import datetime
 
       import bokeh.plotting as bplt
-      import pandas.io.data as web
+      import pandas_datareader.data as web
       ```
 
-      - エラーが起きる
+      - これで import できる
 
-        - ```python
-          ---------------------------------------------------------------------------
-          ImportError                               Traceback (most recent call last)
-          <ipython-input-15-afd494153e79> in <module>()
-                2 
-                3 import bokeh.plotting as bplt
-          ----> 4 import pandas.io.data as web
+- ```python
+  bplt.output_notebook()
+  ```
 
-          /opt/conda/lib/python3.6/site-packages/pandas/io/data.py in <module>()
-                1 raise ImportError(
-          ----> 2     "The pandas.io.data module is moved to a separate package "
-                3     "(pandas-datareader). After installing the pandas-datareader package "
-                4     "(https://github.com/pandas-dev/pandas-datareader), you can change "
-                5     "the import ``from pandas.io import data, wb`` to "
+- ```python
+  start = datetime.date(2014, 1, 1)
+  end = datetime.date.today()
+  df = web.DataReader('^N225', 'yahoo', start, end)
+  df.describe
+  ```
 
-          ImportError: The pandas.io.data module is moved to a separate package (pandas-datareader). After installing the pandas-datareader package (https://github.com/pandas-dev/pandas-datareader), you can change the import ``from pandas.io import data, wb`` to ``from pandas_datareader import data, wb``.
-          ```
+  - これだとうまくいかないみたいなので以下で。
 
-        - pandas は別途インストールが必要になったみたい
+    - ```python
+      start = datetime.date(2014, 1, 1)
+      end = datetime.date.today()
+      df = web.DataReader('NIKKEI225', 'fred', start, end)
+      df.describe
+      ```
 
-          - コンテナに入って pandas_datareader をインストールしておく
+      - https://qiita.com/akichikn/items/782033e746c7ee6832f5
 
-            - ```shell
-              $ docker exec -it notebook bash
-              ```
+- ```python
+  bplt.figure(title='日経平均', x_axis_type='datetime', plot_width=640, plot_height=320)
+  p.segment(df.index, df.High, df.index, df.Low, color='black')
 
-            - ```shell
-              $ conda install -c https://conda.anaconda.org/anaconda pandas-datareader
-              ```
+  bplt.show(p)
+  ```
 
-      - ```python
-        import datetime
+  - エラー
 
-        import bokeh.plotting as bplt
-        import pandas_datareader.data as web
-        ```
+    - ```python
+      ---------------------------------------------------------------------------
+      AttributeError                            Traceback (most recent call last)
+      <ipython-input-22-3c8b1e63d991> in <module>()
+            1 bplt.figure(title='日経平均', x_axis_type='datetime', plot_width=640, plot_height=320)
+      ----> 2 p.segment(df.index, df.High, df.index, df.Low, color='black')
+            3 
+            4 bplt.show(p)
 
-        - これで import できる
+      /opt/conda/lib/python3.6/site-packages/pandas/core/generic.py in __getattr__(self, name)
+         2742             if name in self._info_axis:
+         2743                 return self[name]
+      -> 2744             return object.__getattribute__(self, name)
+         2745 
+         2746     def __setattr__(self, name, value):
 
-  - ```python
-    bplt.output_notebook()
-    ```
+      AttributeError: 'DataFrame' object has no attribute 'High'
+      ```
 
-  - ```python
-    start = datetime.date(2014, 1, 1)
-    end = datetime.date.today()
-    df = web.DataReader('^N225', 'yahoo', start, end)
-    df.describe
-    ```
-
-    - これだとうまくいかないみたいなので以下で。
-
-      - ```python
-        start = datetime.date(2014, 1, 1)
-        end = datetime.date.today()
-        df = web.DataReader('NIKKEI225', 'fred', start, end)
-        df.describe
-        ```
-
-        - https://qiita.com/akichikn/items/782033e746c7ee6832f5
-
-  - ```python
-    bplt.figure(title='日経平均', x_axis_type='datetime', plot_width=640, plot_height=320)
-    p.segment(df.index, df.High, df.index, df.Low, color='black')
-
-    bplt.show(p)
-    ```
-
-    - エラー
-
-      - ```python
-        ---------------------------------------------------------------------------
-        AttributeError                            Traceback (most recent call last)
-        <ipython-input-22-3c8b1e63d991> in <module>()
-              1 bplt.figure(title='日経平均', x_axis_type='datetime', plot_width=640, plot_height=320)
-        ----> 2 p.segment(df.index, df.High, df.index, df.Low, color='black')
-              3 
-              4 bplt.show(p)
-
-        /opt/conda/lib/python3.6/site-packages/pandas/core/generic.py in __getattr__(self, name)
-           2742             if name in self._info_axis:
-           2743                 return self[name]
-        -> 2744             return object.__getattribute__(self, name)
-           2745 
-           2746     def __setattr__(self, name, value):
-
-        AttributeError: 'DataFrame' object has no attribute 'High'
-        ```
-
-        - ​
+      - ​
