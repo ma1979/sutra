@@ -11,13 +11,13 @@
 
 # 環境構築編
 
-- docker pull
+- docker pull で image を取ってくる
 
   - ```shell
     $ docker pull jupyter/datascience-notebook
     ```
 
-- 8888 ポートで jupyter を起動
+- docker run で 8888 ポートで jupyter を起動
 
   - ```shell
     $ docker run -d --name notebook -p 8888:8888 jupyter/datascience-notebook
@@ -40,6 +40,7 @@
         Currently running servers:
         http://localhost:8888/?token=cfc996979890b0cf3cd80b4a34ff3f20a92754849065e8a3 :: /home/jovyan
         ```
+        - この token を初期表示画面の Password or token に入力して、Log in する
 
 ---
 
@@ -54,7 +55,7 @@
 
     - ![Home 🔊 2017-11-25 16-15-40](https://github.com/ma1979/sutra/raw/master/20171125_JupyterNotebook/cap/Home%20%F0%9F%94%8A%202017-11-25%2016-16-56.png)
 
-## sin/cosカーブを書く
+## Hello World その1：sin/cosカーブを書く
 
 - Jupyter NotebookのGUIと操作方法とは...
 
@@ -141,7 +142,7 @@
 
 
 
-## pandas のモジュールを使って Yahoo! の API から日経平均を取得する
+## Hello World その２：pandas のモジュールを使って Yahoo! の API から日経平均を取得する
 
 - pandas を import する
 
@@ -174,73 +175,79 @@
 
       - pandas は別途インストールが必要になったみたい
 
-        - コンテナに入って pandas_datareader をインストールしておく
+        - コンテナに入って、
 
           - ```shell
             $ docker exec -it notebook bash
             ```
 
+        - anaconda で pandas_datareader をインストールしておく
           - ```shell
             $ conda install -c https://conda.anaconda.org/anaconda pandas-datareader
             ```
 
-    - ```python
-      import datetime
+    - namespace も pandas.io.data から pandas_datareader.data に変わったようなので変更して import すると、
+      - ```python
+        import datetime
 
-      import bokeh.plotting as bplt
-      import pandas_datareader.data as web
-      ```
+        import bokeh.plotting as bplt
+        import pandas_datareader.data as web
+        ```
 
-      - これで import できる
+      - これで import できた
 
-- ```python
-  bplt.output_notebook()
-  ```
+- bplt のおまじない
+  - ```python
+    bplt.output_notebook()
+    ```
 
-- ```python
-  start = datetime.date(2014, 1, 1)
-  end = datetime.date.today()
-  df = web.DataReader('^N225', 'yahoo', start, end)
-  df.describe
-  ```
+- 期間を指定して API からデータを取ってくる
+  - ```python
+    start = datetime.date(2014, 1, 1)
+    end = datetime.date.today()
+    df = web.DataReader('^N225', 'yahoo', start, end)
+    df.describe
+    ```
 
-  - これだとうまくいかないみたいなので以下で。
+    - これだとうまくいかないみたいなので以下で。
 
-    - ```python
-      start = datetime.date(2014, 1, 1)
-      end = datetime.date.today()
-      df = web.DataReader('NIKKEI225', 'fred', start, end)
-      df.describe
-      ```
+      - ```python
+        start = datetime.date(2014, 1, 1)
+        end = datetime.date.today()
+        df = web.DataReader('NIKKEI225', 'fred', start, end)
+        df.describe
+        ```
 
-      - https://qiita.com/akichikn/items/782033e746c7ee6832f5
+        - 参考
+          - https://qiita.com/akichikn/items/782033e746c7ee6832f5
 
-- ```python
-  bplt.figure(title='日経平均', x_axis_type='datetime', plot_width=640, plot_height=320)
-  p.segment(df.index, df.High, df.index, df.Low, color='black')
+- グラフにプロットする
+  - ```python
+    bplt.figure(title='日経平均', x_axis_type='datetime', plot_width=640, plot_height=320)
+    p.segment(df.index, df.High, df.index, df.Low, color='black')
 
-  bplt.show(p)
-  ```
+    bplt.show(p)
+    ```
 
-  - エラー
+    - エラー
 
-    - ```python
-      ---------------------------------------------------------------------------
-      AttributeError                            Traceback (most recent call last)
-      <ipython-input-22-3c8b1e63d991> in <module>()
-            1 bplt.figure(title='日経平均', x_axis_type='datetime', plot_width=640, plot_height=320)
-      ----> 2 p.segment(df.index, df.High, df.index, df.Low, color='black')
-            3 
-            4 bplt.show(p)
+      - ```python
+        ---------------------------------------------------------------------------
+        AttributeError                            Traceback (most recent call last)
+        <ipython-input-22-3c8b1e63d991> in <module>()
+              1 bplt.figure(title='日経平均', x_axis_type='datetime', plot_width=640, plot_height=320)
+        ----> 2 p.segment(df.index, df.High, df.index, df.Low, color='black')
+              3 
+              4 bplt.show(p)
 
-      /opt/conda/lib/python3.6/site-packages/pandas/core/generic.py in __getattr__(self, name)
-         2742             if name in self._info_axis:
-         2743                 return self[name]
-      -> 2744             return object.__getattribute__(self, name)
-         2745 
-         2746     def __setattr__(self, name, value):
+        /opt/conda/lib/python3.6/site-packages/pandas/core/generic.py in __getattr__(self, name)
+           2742             if name in self._info_axis:
+           2743                 return self[name]
+        -> 2744             return object.__getattribute__(self, name)
+           2745 
+           2746     def __setattr__(self, name, value):
 
-      AttributeError: 'DataFrame' object has no attribute 'High'
-      ```
+        AttributeError: 'DataFrame' object has no attribute 'High'
+        ```
 
-      - ​
+        - ​
