@@ -220,12 +220,28 @@
 
         - 参考
           - https://qiita.com/akichikn/items/782033e746c7ee6832f5
-        - DataReader
-          - ​
+          - https://note.nkmk.me/python-pandas-datareader-stock-population/
+
+        - web.DataReader
+
+          - ![datareader](https://github.com/ma1979/sutra/raw/master/20171125_JupyterNotebook/cap/Python%E3%81%A6%E3%82%99%E6%A0%AA%E4%BE%A1%E3%82%92%E5%8F%96%E5%BE%97%E3%81%97%E3%82%AF%E3%82%99%E3%83%A9%E3%83%95%E8%A1%A8%E7%A4%BA%E3%81%99%E3%82%8B%20-%20Qiita%20%F0%9F%94%8A%202017-11-26%2005-14-13.png)
+
+          - >以下のソースがサポートされている。
+            >
+            >- Yahoo! Finance
+            >- Google Finance
+            >- FRED
+            >- Fama/French
+            >- World Bank
+            >- OECD
+            >- Eurostat
+            >- EDGAR Index
+
+        - ​
 
 - グラフにプロットする
   - ```python
-    bplt.figure(title='日経平均', x_axis_type='datetime', plot_width=640, plot_height=320)
+    p = bplt.figure(title='日経平均', x_axis_type='datetime', plot_width=640, plot_height=320)
     p.segment(df.index, df.High, df.index, df.Low, color='black')
 
     bplt.show(p)
@@ -252,4 +268,23 @@
         AttributeError: 'DataFrame' object has no attribute 'High'
         ```
 
-        - ​
+        - これでいけた
+
+          - ```python
+            p = bplt.figure(title='日経平均', x_axis_type='datetime', plot_width=640, plot_height=320)
+            p.line(df.index, df.NIKKEI225, color='black')
+
+            bplt.show(p)
+            ```
+
+          - ​
+
+          - DataFrame について
+
+            - index
+              - Primary Key みたいなイメージ
+                - 今回は日付
+            - values
+              - index に対する値
+                - 今回は日付に対する株価
+              - web.DataReader で読んだときに、'NIKKEI225' プロパティに株価がセットされている
