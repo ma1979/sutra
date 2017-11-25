@@ -25,7 +25,7 @@
 
   - 動いた
 
-    - ![Jupyter Notebook 🔊 2017-11-25 16-09-57](sutra/20171125_JupyterNotebook/cap/Jupyter Notebook 🔊 2017-11-25 16-09-57.png)
+    - ![Jupyter Notebook 🔊 2017-11-25 16-09-57](https://github.com/ma1979/sutra/raw/master/20171125_JupyterNotebook/cap/Jupyter%20Notebook%20%F0%9F%94%8A%202017-11-25%2016-09-57.png)
 
     - コンテナに入って、
 
