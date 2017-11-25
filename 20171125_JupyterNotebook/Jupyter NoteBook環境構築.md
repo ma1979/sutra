@@ -247,7 +247,7 @@
     bplt.show(p)
     ```
 
-    - エラー
+    - エラー。Highという Attribute がないみたい。
 
       - ```python
         ---------------------------------------------------------------------------
@@ -268,7 +268,7 @@
         AttributeError: 'DataFrame' object has no attribute 'High'
         ```
 
-        - これでいけた
+        - segment でなく line で描画してみたらいけた
 
           - ```python
             p = bplt.figure(title='日経平均', x_axis_type='datetime', plot_width=640, plot_height=320)
@@ -287,4 +287,4 @@
             - values
               - index に対する値
                 - 今回は日付に対する株価
-              - web.DataReader で読んだときに、'NIKKEI225' プロパティに株価がセットされている
+              - web.DataReader で読んだときに、'NIKKEI225' Attribute に株価がセットされている
