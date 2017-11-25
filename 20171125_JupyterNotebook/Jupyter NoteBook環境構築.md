@@ -277,7 +277,7 @@
             bplt.show(p)
             ```
 
-          - ​
+          - ![graph](https://github.com/ma1979/sutra/raw/master/20171125_JupyterNotebook/cap/Untitled%20%F0%9F%94%8A%202017-11-26%2005-44-22.png)
 
           - DataFrame について
 
