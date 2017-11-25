@@ -220,6 +220,8 @@
 
         - 参考
           - https://qiita.com/akichikn/items/782033e746c7ee6832f5
+        - DataReader
+          - ​
 
 - グラフにプロットする
   - ```python
