@@ -198,7 +198,7 @@
   - build したイメージを使って起動する
 
     - ```shell
-      $ docker run -itd -v /etc/localtime:/etc/localtime:ro -e "HUBOT_SLACK_TOKEN=slackから取得したtoken" --name "作成するコンテナ名" bot-base
+      $ docker run -itd -v /etc/localtime:/etc/localtime:ro -e "HUBOT_SLACK_TOKEN=slackから取得したtoken" --name "作成するコンテナ名" [DockerHub UserID]/bot-base
       ```
 
       - 起動時に /bin/sh や /bin/bash などを指定すると CMD で記述した処理が実行されないみたいなので注意
