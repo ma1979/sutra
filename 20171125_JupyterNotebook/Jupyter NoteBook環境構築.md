@@ -25,7 +25,7 @@
 
   - 動いた
 
-    - ![Jupyter Notebook 🔊 2017-11-25 16-09-57](/Users/chelseagirl/Desktop/20171125_JupyterNootebook/cap/Jupyter Notebook 🔊 2017-11-25 16-09-57.png)
+    - ![Jupyter Notebook 🔊 2017-11-25 16-09-57](./cap/Jupyter Notebook 🔊 2017-11-25 16-09-57.png)
 
     - コンテナに入って、
 
