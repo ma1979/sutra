@@ -47,18 +47,18 @@
 
 - token を入力して Login する
 
-  - ![Home 🔊 2017-11-25 16-15-40](/Users/chelseagirl/Desktop/20171125_JupyterNootebook/cap/Home 🔊 2017-11-25 16-15-40.png)
+  - ![Home 🔊 2017-11-25 16-15-40](https://github.com/ma1979/sutra/raw/master/20171125_JupyterNotebook/cap/Home%20%F0%9F%94%8A%202017-11-25%2016-15-40.png)
 
   - New で Python3 を選択する
 
-    - ![Home 🔊 2017-11-25 16-15-40](/Users/chelseagirl/Desktop/20171125_JupyterNootebook/cap/Home 🔊 2017-11-25 16-15-40.png)
+    - ![Home 🔊 2017-11-25 16-15-40](https://github.com/ma1979/sutra/raw/master/20171125_JupyterNotebook/cap/Home%20%F0%9F%94%8A%202017-11-25%2016-16-56.png)
 
     - sin/cosカーブを書く
 
       - Jupyter NotebookのGUIと操作方法
 
         - ln []ごとにコードブロックと実行結果がある
-          - ![Untitled 🔊 2017-11-25 16-30-21](/Users/chelseagirl/Desktop/20171125_JupyterNootebook/cap/Untitled 🔊 2017-11-25 16-30-21.png)
+          - ![Untitled 🔊 2017-11-25 16-30-21](https://github.com/ma1979/sutra/raw/master/20171125_JupyterNotebook/cap/Untitled%20%F0%9F%94%8A%202017-11-25%2016-30-21.png)
           - コードブロックにコードを書いて Shift + Enter を押すと実行される
 
       - ```python
@@ -91,7 +91,7 @@
 
           - 今回は bokeh.plotting を使った例
 
-            - ![Python製の可視化ライブラリBokehの基本的な使い方 - シラベタ 2017-11-25 16-44-37](/Users/chelseagirl/Desktop/20171125_JupyterNootebook/cap/Python製の可視化ライブラリBokehの基本的な使い方 - シラベタ 2017-11-25 16-44-37.png)
+            - ![Python製の可視化ライブラリBokehの基本的な使い方 - シラベタ 2017-11-25 16-44-37](https://github.com/ma1979/sutra/raw/master/20171125_JupyterNotebook/cap/Python%E8%A3%BD%E3%81%AE%E5%8F%AF%E8%A6%96%E5%8C%96%E3%83%A9%E3%82%A4%E3%83%96%E3%83%A9%E3%83%AABokeh%E3%81%AE%E5%9F%BA%E6%9C%AC%E7%9A%84%E3%81%AA%E4%BD%BF%E3%81%84%E6%96%B9%20-%20%E3%82%B7%E3%83%A9%E3%83%99%E3%82%BF%202017-11-25%2016-44-37.png)
 
           - bplt.output_notebook()
 
@@ -232,4 +232,4 @@
             AttributeError: 'DataFrame' object has no attribute 'High'
             ```
 
-          - ​	
+            - ​
