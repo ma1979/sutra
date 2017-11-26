@@ -167,7 +167,7 @@
     - docker build する
 
       - ```shell
-        $ docker build -t [DockerHub UserID]/letschat-hubot-mongo .
+        $ docker build -t ma1979/letschat-hubot-mongo .
         ```
 
     - docker push する
@@ -255,7 +255,7 @@
       hubot:
         image: ma1979/letschat-hubot
         environment:
-          HUBOT_LCB_TOKEN: NWExYTQ4Nzg1MWFmZWYwMDBlYjMzYjNhOjNiOWJkMTdlZTgzZjIyMDljMmI0YjEwZDY5YzYxYTMxM2FjODczYWY3Y2Q2NTljMA==
+          HUBOT_LCB_TOKEN: NWExYTQ4Nzg1MWFmZWYwMDBlYjMzYjNhOmQyM2FmYjE2ZjA0YjI0MTk0ZDVmODRmYzc2MmI1OTllNmE0ODRkZmM0MjJmNzMyZA==
           HUBOT_LCB_ROOMS: 5a1a489951afef000eb33b3b
           HUBOT_LCB_PROTOCOL: http
           HUBOT_LCB_HOSTNAME: letschat
