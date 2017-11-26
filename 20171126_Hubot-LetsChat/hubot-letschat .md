@@ -36,21 +36,21 @@
 
 - http://localhost:8080 にアクセスする
 
-  - ![Login · Let's Chat 2017-11-26 11-12-05](/Users/chelseagirl/Documents/GitHub/sutra/20171126_Hubot-LetsChat/cap/Login · Let's Chat 2017-11-26 11-12-05.png)
+  - ![Login · Let's Chat 2017-11-26 11-12-05](https://github.com/ma1979/sutra/raw/master/20171126_Hubot-LetsChat/cap/Login%20%C2%B7%20Let's%20Chat%202017-11-26%2011-12-05.png)
 
 - bot 用のアカウントを作成する
 
-  - ![Login · Let's Chat 2017-11-26 11-48-35](/Users/chelseagirl/Documents/GitHub/sutra/20171126_Hubot-LetsChat/cap/Login · Let's Chat 2017-11-26 11-48-35.png)
+  - ![Login · Let's Chat 2017-11-26 11-48-35](https://raw.githubusercontent.com/ma1979/sutra/master/20171126_Hubot-LetsChat/cap/Login%20%C2%B7%20Let's%20Chat%202017-11-26%2011-48-35.png)
   - とりあえずこんな感じで
-    - ![Login · Let's Chat 2017-11-26 11-51-46](/Users/chelseagirl/Documents/GitHub/sutra/20171126_Hubot-LetsChat/cap/Login · Let's Chat 2017-11-26 11-51-46.png)
+    - ![Login · Let's Chat 2017-11-26 11-51-46](https://github.com/ma1979/sutra/raw/master/20171126_Hubot-LetsChat/cap/Login%20%C2%B7%20Let's%20Chat%202017-11-26%2011-51-46.png)
 
 - bot 用アカウントでログインする
 
 - テスト用のルームを作る
 
-  - ![Rooms · Let's Chat 2017-11-26 11-57-58](/Users/chelseagirl/Documents/GitHub/sutra/20171126_Hubot-LetsChat/cap/Rooms · Let's Chat 2017-11-26 11-57-58.png)
+  - ![Rooms · Let's Chat 2017-11-26 11-57-58](https://github.com/ma1979/sutra/raw/master/20171126_Hubot-LetsChat/cap/Rooms%20%C2%B7%20Let's%20Chat%202017-11-26%2011-57-58.png)
   - こんな感じで
-    - ![Rooms · Let's Chat 2017-11-26 11-59-55](/Users/chelseagirl/Documents/GitHub/sutra/20171126_Hubot-LetsChat/cap/Rooms · Let's Chat 2017-11-26 11-59-55.png)
+    - ![Rooms · Let's Chat 2017-11-26 11-59-55](https://github.com/ma1979/sutra/raw/master/20171126_Hubot-LetsChat/cap/Rooms%20%C2%B7%20Let's%20Chat%202017-11-26%2011-59-55.png)
 
 - bot 用のアカウントとテスト用のルームがどういう形式で mongoDB に永続化されているかを確認する
 
@@ -169,7 +169,7 @@
         $ docker push ma1979/letschat-hubot-mongo
         ```
 
-      - ![ma1979 - Docker Hub 2017-11-26 12-11-28](/Users/chelseagirl/Documents/GitHub/sutra/20171126_Hubot-LetsChat/cap/ma1979 - Docker Hub 2017-11-26 12-11-28.png)
+      - ![ma1979 - Docker Hub 2017-11-26 12-11-28](https://github.com/ma1979/sutra/raw/master/20171126_Hubot-LetsChat/cap/ma1979%20-%20Docker%20Hub%202017-11-26%2012-11-28.png)
 
 ---
 
