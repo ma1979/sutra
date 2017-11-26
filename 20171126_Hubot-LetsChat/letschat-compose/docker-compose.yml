@@ -1,10 +1,26 @@
-app:
-  image: sdelements/lets-chat
-  links:
-    - mongo
-  ports:
-    - 8080:8080
-    - 5222:5222
+version: '2'
+services:
+  letschat:
+    image: sdelements/lets-chat
+    ports:
+      - 8080:8080
+      - 5222:5222
+    expose: 
+      - 8080
 
-mongo:
-  image: ma1979/letschat-hubot-mongo
+  mongo:
+      image: ma1979/letschat-hubot-mongo
+
+  hubot:
+    image: ma1979/letschat-hubot
+    environment:
+      HUBOT_LCB_TOKEN: NWExYTQ4Nzg1MWFmZWYwMDBlYjMzYjNhOjNiOWJkMTdlZTgzZjIyMDljMmI0YjEwZDY5YzYxYTMxM2FjODczYWY3Y2Q2NTljMA==
+      HUBOT_LCB_ROOMS: 5a1a489951afef000eb33b3b
+      HUBOT_LCB_PROTOCOL: http
+      HUBOT_LCB_HOSTNAME: letschat
+      HUBOT_LCB_PORT: 8080
+      PORT: 8082
+    ports:
+      - 8082:8082
+    expose:
+      - 8082

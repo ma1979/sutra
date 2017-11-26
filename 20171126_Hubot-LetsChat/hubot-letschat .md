@@ -9,11 +9,11 @@
 
 ---
 
-## Let's Chat の bot 用のアカウントを作った状態のDocker Image を作る
+## Let's Chat の bot 用のアカウントが設定された状態のDocker Image を作る
 
 - **<u>Docker Image は既に出来ているので使うだけの場合はこの手順は飛ばしてOK</u>**
 
-- docker-compose.ymd を書く
+- docker-compose.yml を書く
 
   - ```yaml
     app:
@@ -46,11 +46,17 @@
 
 - bot 用アカウントでログインする
 
+- 同じような感じで bot と対話テストするためのユーザを設定する。 hoge で設定した。
+
 - テスト用のルームを作る
 
   - ![Rooms · Let's Chat 2017-11-26 11-57-58](https://github.com/ma1979/sutra/raw/master/20171126_Hubot-LetsChat/cap/Rooms%20%C2%B7%20Let's%20Chat%202017-11-26%2011-57-58.png)
   - こんな感じで
     - ![Rooms · Let's Chat 2017-11-26 11-59-55](https://github.com/ma1979/sutra/raw/master/20171126_Hubot-LetsChat/cap/Rooms%20%C2%B7%20Let's%20Chat%202017-11-26%2011-59-55.png)
+
+- bot で token を発行する
+
+  - ![token](https://github.com/ma1979/sutra/raw/master/20171126_Hubot-LetsChat/cap/Rooms%20%C2%B7%20Let's%20Chat%202017-11-26%2016-14-24.png)
 
 - bot 用のアカウントとテスト用のルームがどういう形式で mongoDB に永続化されているかを確認する
 
@@ -113,17 +119,18 @@
   - と確認しつつも、mongodump でバックアップを取る
 
     - ```shell
-      mongodump --archive=/tmp/letschat-hubot-mongo-initial.gz --gzip --db letschat
-      2017-11-26T05:00:48.507+0000    writing letschat.users to archive '/tmp/letschat-hubot-mongo-initial.gz'
-      2017-11-26T05:00:48.510+0000    writing letschat.rooms to archive '/tmp/letschat-hubot-mongo-initial.gz'
-      2017-11-26T05:00:48.515+0000    writing letschat.sessions to archive '/tmp/letschat-hubot-mongo-initial.gz'
-      2017-11-26T05:00:48.520+0000    writing letschat.messages to archive '/tmp/letschat-hubot-mongo-initial.gz'
-      2017-11-26T05:00:48.538+0000    done dumping letschat.sessions (1 document)
-      2017-11-26T05:00:48.540+0000    writing letschat.usermessages to archive '/tmp/letschat-hubot-mongo-initial.gz'
-      2017-11-26T05:00:48.557+0000    done dumping letschat.rooms (1 document)
-      2017-11-26T05:00:48.602+0000    done dumping letschat.messages (0 documents)
-      2017-11-26T05:00:48.609+0000    done dumping letschat.users (1 document)
-      2017-11-26T05:00:48.616+0000    done dumping letschat.usermessages (0 documents)
+      $ mongodump --archive=/tmp/letschat-hubot-mongo-initial.gz --gzip --db letschat
+      2017-11-26T11:48:13.594+0000    writing letschat.users to archive '/tmp/letschat-hubot-mongo-initial.gz'
+      2017-11-26T11:48:13.594+0000    writing letschat.rooms to archive '/tmp/letschat-hubot-mongo-initial.gz'
+      2017-11-26T11:48:13.618+0000    writing letschat.messages to archive '/tmp/letschat-hubot-mongo-initial.gz'
+      2017-11-26T11:48:13.626+0000    writing letschat.sessions to archive '/tmp/letschat-hubot-mongo-initial.gz'
+      2017-11-26T11:48:13.644+0000    done dumping letschat.users (2 documents)
+      2017-11-26T11:48:13.644+0000    writing letschat.usermessages to archive '/tmp/letschat-hubot-mongo-initial.gz'
+      2017-11-26T11:48:13.647+0000    done dumping letschat.messages (0 documents)
+      2017-11-26T11:48:13.649+0000    done dumping letschat.sessions (0 documents)
+      2017-11-26T11:48:13.652+0000    done dumping letschat.usermessages (0 documents)
+      2017-11-26T11:48:13.653+0000    done dumping letschat.rooms (1 document)
+
       ```
 
   - これを GitHub に push する
@@ -131,7 +138,7 @@
     - コンテナからdumpファイルを取り出す
 
       - ```shell
-        $ docker cp d44336c25626:/tmp/letschat-hubot-mongo-initial.gz .
+        $ docker cp letschatcompose_mongo_1:/tmp/letschat-hubot-mongo-initial.gz .
         ```
 
       - GitHub に push
@@ -180,22 +187,95 @@
 
 ---
 
-## bot 用アカウントが入った Let's Chat を立ち上げる
+## Let's Chat 用アダプタが設定された状態の Hubot の Docker Image を作る
+
+- **<u>Docker Image は既に出来ているので使うだけの場合はこの手順は飛ばしてOK</u>**
+
+- https://github.com/ma1979/sutra/blob/master/20171126_Hubot/Hubot%20%E7%92%B0%E5%A2%83%E6%A7%8B%E7%AF%89.md の slack を let's chat に読み替えるだけ
+
+  - Dockerfile を書く
+
+    - ```dockerfile
+      FROM node
+      MAINTAINER ma1979
+
+      RUN npm install -g yo generator-hubot
+      RUN npm list -g yo generator-hubot
+      RUN useradd bot
+      RUN mkdir /home/bot && chown bot.bot /home/bot
+
+      USER bot
+      WORKDIR /home/bot
+      RUN  yo hubot --owner "ma1979" --name "bot" --description "Hubot image" --adapter lets-chat
+
+      RUN echo "#!/bin/bash" > /home/bot/run_hubot.sh
+      RUN echo "bin/hubot --adapter lets-chat" >> /home/bot/run_hubot.sh
+
+      RUN chmod 777 /home/bot/run_hubot.sh
+
+      CMD cd /home/bot; sh run_hubot.sh
+      ```
+
+  - docker build する
+
+    - ```shell
+      $ docker build -t ma1979/letschat-hubot .
+      ```
+
+  - docker push する
+
+    - ```shell
+      $ docker push ma1979/letschat-hubot
+      ```
+
+    - ​
+
+
+
+---
+
+## bot 用アカウントが設定された状態の Let's Chat とそこに連携するよう設定された状態の Hubot を立ち上げる
 
 - push した Image を使って docker-compose するように docker-compose.yml を書き直す
 
   - ```yaml
-    app:
-      image: sdelements/lets-chat
-      links:
-        - mongo
-      ports:
-        - 8080:8080
-        - 5222:5222
+    version: '2'
+    services:
+      letschat:
+        image: sdelements/lets-chat
+        ports:
+          - 8080:8080
+          - 5222:5222
+        expose: 
+          - 8080
 
-    mongo:
-      image: ma1979/letschat-hubot-mongo
+      mongo:
+          image: ma1979/letschat-hubot-mongo
+
+      hubot:
+        image: ma1979/letschat-hubot
+        environment:
+          HUBOT_LCB_TOKEN: NWExYTQ4Nzg1MWFmZWYwMDBlYjMzYjNhOjNiOWJkMTdlZTgzZjIyMDljMmI0YjEwZDY5YzYxYTMxM2FjODczYWY3Y2Q2NTljMA==
+          HUBOT_LCB_ROOMS: 5a1a489951afef000eb33b3b
+          HUBOT_LCB_PROTOCOL: http
+          HUBOT_LCB_HOSTNAME: letschat
+          HUBOT_LCB_PORT: 8080
+          PORT: 8082
+        ports:
+          - 8082:8082
+        expose:
+          - 8082
     ```
+
+  - コンテナ間通信をするときは version 2 を使った方がよいみたい
+
+    - https://qiita.com/skyis/items/c85f2f60f4f73045e6bd
+
+  - その上で下記2点がポイントになる（のでは、と思う）
+
+    - incoming では Hubot から Let's Chat に通信するので Let's Chat 側の 8080 ポートを expose で公開する
+    - outgoing では Let's Chat に通信するので Hubot 側の PORT 環境変数 の値を expose で公開する
+    - コンテナ内外でポートを変えていないので ports はいらないかも...
 
 - docker-compose up する
 
@@ -203,7 +283,12 @@
     $ docker-compose up
     ```
 
-  - ​
+- Let's Chat に bot でログインできることを確認する
 
+  - Username
+    - hoge
+  - Password
+    - 11111111
 
-- - ​
+- ​
+
