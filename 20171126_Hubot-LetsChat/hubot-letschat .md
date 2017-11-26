@@ -296,7 +296,7 @@
 
 - Ping 投げると pong を返してくれる
 
-  - ​
+  - ![ping](https://github.com/ma1979/sutra/raw/master/20171126_Hubot-LetsChat/cap/%E3%83%86%E3%82%B9%E3%83%88%E7%94%A8%E3%83%AB%E3%83%BC%E3%83%A0%20%C2%B7%20Let's%20Chat%202017-11-26%2021-59-07.png)
 
 
 ---
