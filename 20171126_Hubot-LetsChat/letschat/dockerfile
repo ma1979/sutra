@@ -1,0 +1,14 @@
+FROM sdelements/lets-chat
+MAINTAINER ma1979
+
+#RUN npm install -g yo generator-hubot
+#RUN npm list -g yo generator-hubot
+#RUN useradd bot
+#RUN mkdir /home/bot && chown bot.bot /home/bot
+
+#USER bot
+#WORKDIR /home/bot
+#RUN  yo hubot --owner "ma1979" --name "bot" --description "Hubot image" --adapter slack
+
+#CMD cd /home/bot
+#CMD bin/hubot --adapter slack

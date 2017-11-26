@@ -1,0 +1,10 @@
+app:
+  image: sdelements/lets-chat
+  links:
+    - mongo
+  ports:
+    - 8080:8080
+    - 5222:5222
+
+mongo:
+  image: ma1979/letschat-hubot-mongo
