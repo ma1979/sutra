@@ -108,7 +108,7 @@
       1
       ```
 
-      - sessions はログインセッションが入っていると思うので rooms と users が対象
+      - sessions はログインセッションが入っていると思うので rooms と users が対象みたい
 
   - と確認しつつも、mongodump でバックアップを取る
 
@@ -171,6 +171,13 @@
 
       - ![ma1979 - Docker Hub 2017-11-26 12-11-28](https://github.com/ma1979/sutra/raw/master/20171126_Hubot-LetsChat/cap/ma1979%20-%20Docker%20Hub%202017-11-26%2012-11-28.png)
 
+
+### おまけ
+
+- mongoDBの基本的な操作方法
+  - https://qiita.com/yuji0602/items/c55e2cb75376fd565b4e
+    - スキーマレスなのでdrop＆createが簡単
+
 ---
 
 ## bot 用アカウントが入った Let's Chat を立ち上げる
@@ -198,8 +205,5 @@
 
   - ​
 
-### おまけ
 
-- mongoDBの基本的な操作方法
-  - https://qiita.com/yuji0602/items/c55e2cb75376fd565b4e
-    - スキーマレスなのでdrop＆createが簡単
+- - ​
