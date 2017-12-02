@@ -1,7 +1,7 @@
 # 写経ログです
 
 ---
-# [20171202_redmine-tag](https://github.com/ma1979/sutra/blob/master/20171202_redmine-tag/memo.md)
+## [20171202_redmine-tag](https://github.com/ma1979/sutra/blob/master/20171202_redmine-tag/memo.md)
 
 - とある環境に近い redmine にチケットにタグを設定できる plugin をインストールし、DockerHub に pushする
   - **redmine のバージョンが低いので無理そう。断念**
