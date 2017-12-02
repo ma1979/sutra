@@ -1,8 +1,15 @@
 # 写経ログです
 
 ---
+# [20171202_redmine-tag]()
+
+- とある環境に近い redmine にチケットにタグを設定できる plugin をインストールし、DockerHub に pushする
+
+
+
 ## [20171201_redmine-textile-markdown](https://github.com/ma1979/sutra/blob/master/20171201_redmine-textile-markdown/memo.md)
-- とある環境に近い redmine　のバージョンで redmine - mysql の 環境を docker-compose で構築し、 textile と markdown を任意に切り替えられる plugin をインストールし、 plugin 導入済の Image を DockerHub に push する
+
+- とある環境に近い redmine のバージョンで redmine - mysql の 環境を docker-compose で構築し、 textile と markdown を任意に切り替えられる plugin をインストールし、 plugin 導入済の Image を DockerHub に push する
 
 ---
 ## [20171126_Hubot-LetsChat](https://github.com/ma1979/sutra/blob/master/20171126_Hubot-LetsChat/hubot-letschat.md)
