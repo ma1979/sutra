@@ -274,7 +274,7 @@
   - その上で下記2点がポイントになる（のでは、と思う）
 
     - incoming では Hubot から Let's Chat に通信するので Let's Chat 側の 8080 ポートを expose で公開する
-    - outgoing では Let's Chat に通信するので Hubot 側の PORT 環境変数 の値を expose で公開する
+    - outgoing では Let's Chat から Hubot に通信するので Hubot 側の PORT 環境変数 の値を expose で公開する
     - コンテナ内外でポートを変えていないので ports はいらないかも...
 
 - docker-compose up する

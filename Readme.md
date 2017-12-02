@@ -14,6 +14,6 @@
 ## 20171126_Hubot-LetsChat
 - 前準備
   - bot 用アカウントが設定された状態の Let's Chat の DB として mongoDB の Image を作成して DockerHub に push し、 そこに連携するよう設定された状態の Hubot の Image を作成して DockerHub に push する
-- Let's Chat と mongoDB と Hubot を連携済の状態で Docker Compose で立ち上げる
+- Let's Chat / mongoDB と Hubot を連携済の状態で Docker Compose で立ち上げる
 
 ---
