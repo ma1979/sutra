@@ -1,6 +1,9 @@
 # 写経ログです
 
 ---
+## [20171202_Hubot-Trello](https://github.com/ma1979/sutra/blob/master/20171202_Hubot-Trello/memo.md)
+
+---
 ## [20171202_BingSpeechAPI](https://github.com/ma1979/sutra/blob/master/20171202_BingSpeechAPI/memo.md) 途中
 
 ---
