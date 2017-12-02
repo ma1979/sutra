@@ -17,3 +17,5 @@
 - Let's Chat / mongoDB と Hubot を連携済の状態で Docker Compose で立ち上げる
 
 ---
+## 20171201_redmine-textile-markdown
+- とある環境に近い redmine　のバージョンで redmine - mysql の 環境を docker-compose で構築し、 textile と markdown を任意に切り替えられる plugin をインストールし、 plugin 導入済の Image を DockerHub に push する
