@@ -90,6 +90,10 @@
 
 ## redmine_persist_wfmt をインストールする
 
+- plugin はこれ
+
+  - https://github.com/pinzolo/redmine_persist_wfmt
+
 - redmine コンテナに入る
 
   ```shell
