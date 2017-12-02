@@ -4,7 +4,7 @@
 
 - dockerfile を書く
 
-  - json 1.8.3 をインストールできない問題を回避するために rbenv を入れたイメージを作成する
+  - bundle install が通るように json 1.8.3 などを入れておく
 
     ```dockerfile
     FROM redmine:2.6.10-passenger
