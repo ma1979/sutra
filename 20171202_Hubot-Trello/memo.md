@@ -1,4 +1,4 @@
-# trello の期限付きカードの通知を x 時間、y 分前に hubot から slack に通知させる
+# trello の期限付きカードの通知を x 時間、y 分前に hubot から slack に通知させる coffee script を作成し、hubot - slack の docker image を作成する
 
 - 写経元
 
@@ -150,6 +150,9 @@
      - HUBOT_SLACK_CHANNEL : 通知先の slack の チャンネル
      - HUBOT_TRELLO_JOB_LIST_ID : Todo:あとで board に変更
      - HUBOT_TRELLO_CRON : 通知の間隔 秒からの cron 書式
+  - ポイント
+    - node-trello の各メソッドは非同期コールバックなので逐次的には書けない
+    - card の 担当者リスト（idMembers） には id しか入っていないので名前を引くには member API から username を引く必要がある
 
  -  dockerfile を修正する
 
@@ -183,5 +186,5 @@
     $ docker run --rm -e "HUBOT_SLACK_TOKEN=<slaktoken>" -e "HUBOT_TRELLO_KEY=<apikey>" -e "HUBOT_TRELLO_TOKEN=<trellotoken>" -e "HUBOT_TRELLO_ORGANIZATION=<teamid>" -e "HUBOT_TRELLO_JOB_LIST_ID=<listid>" -e "HUBOT_TRELLO_CRON=*/30 * * * * *" --name trello -d ma1979/trello-hubot
     ```
 
-    ​
+- docker pull する
 
