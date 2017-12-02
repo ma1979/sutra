@@ -128,6 +128,8 @@
 
 - 入力エリアに textile か markdown かのツールボックスが出る
 
+  ![toolbox](https://github.com/ma1979/sutra/raw/master/20171201_redmine-textile-markdown/redmine/cap/%E3%83%90%E3%82%B0%20%231:%20hoge%20-%20hoge%20-%20Redmine%202017-12-02%2001-58-47.png)
+
 - dockerfile に反映させる
 
   ```dockerfile
