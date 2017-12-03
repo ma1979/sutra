@@ -82,14 +82,8 @@
   Trello = require('node-trello')
   moment = require('moment')
 
-  createMsg = (data) ->
-    msg = ""
-    if data.member?
-      msg += "@" + data.member + " "
-    msg += "タスク警察や！" + "\n"
-    msg += "「" + data.name + "」が期限：" + data.due + " を超えとるで！\n"
-    msg += "\n"
-    return msg
+  convertTime = (utc) ->
+    return utc.add('Hours', 9)
 
   module.exports = (robot) ->
     ORG = process.env.HUBOT_TRELLO_ORGANIZATION
@@ -112,47 +106,107 @@
           return member.username
       return 'channel'
 
+    createMsg1 = (card, due) ->
+      member = getMemberNameByID(card.idMembers[0])
+      msg = ""
+      if member?
+        msg += "@" + member + " "
+      msg += "タスク警察や！" + "\n"
+      msg += "「" + card.name + "」は今日の " + due.format("H:mm") + " が期限やで！\n"
+      msg += "\n"
+      return msg
+
+    createMsg2 = (card, due) ->
+      member = getMemberNameByID(card.idMembers[0])
+      msg = ""
+      if member?
+        msg += "@" + member + " "
+      msg += "タスク警察や！" + "\n"
+      msg += "「" + card.name + "」はあと 1時間 で期限の " + due.format("H:mm") + " やで！\n"
+      msg += "\n"
+      return msg
+
+    createMsg3 = (card, due) ->
+      member = getMemberNameByID(card.idMembers[0])
+      msg = ""
+      if member?
+        msg += "@" + member + " "
+      msg += "タスク警察や！" + "\n"
+      msg += "「" + card.name + "」が期限の " + due.format("YYYY/MM/DD H:mm") + " を超えとるで！\n"
+      msg += "\n"
+      return msg
+
     getOrganizationsMembers()
 
-    trelloListID = process.env.HUBOT_TRELLO_JOB_LIST_ID
+    cronJobDaily = new cronJob("0 0 9 * * *", () ->
+      now = convertTime(moment())
+      envelope = room: process.env.HUBOT_SLACK_CHANNEL
 
-    cronJob = new cronJob(process.env.HUBOT_TRELLO_CRON, () ->
-      now = moment()
-      envelope = room: HUBOT_SLACK_CHANNEL
-      mention = ""
-
-      trello.get "/1/lists/#{trelloListID}/cards", {}, (err, data) ->
+      trello.get "/1/boards/#{process.env.HUBOT_TRELLO_BOARD_ID}/cards", {}, (err, data) ->
         if err
           robot.send(err)
           return
 
+        # 期限日の9:00
+        for card in data
+          if !(card.due ==null)
+            due = convertTime(moment(card.due))
+            diff = now.diff(due, 'days')
+            if diff == 0
+              msg = createMsg1(card, due)
+              robot.send(envelope, msg)
+    )
+    cronJobDaily.start()
+
+    cronJobHourly = new cronJob("0 */30 * * * *", () ->
+      now = convertTime(moment())
+      envelope = room: process.env.HUBOT_SLACK_CHANNEL
+
+      trello.get "/1/boards/#{process.env.HUBOT_TRELLO_BOARD_ID}/cards", {}, (err, data) ->
+        if err
+          robot.send(err)
+          return
+        
+        # 期限日の1時間前
+        for card in data
+          if !(card.due ==null)
+            due = convertTime(moment(card.due))
+            diffDays = now.diff(due, 'days')
+            if diffDays == 0
+              diffHours = now.diff(due, 'minutes')
+              if diffHours >= -60 and diffHours <=0
+                msg = createMsg2(card, due)
+                robot.send(envelope, msg)
+
+        # 期限超過
         for card in data
           if !(card.due == null)
-            due = moment(card.due)
+            due = convertTime(moment(card.due))
             diff = now.diff(due, 'minutes')
 
             if diff >= 0
-              remindData = {}
-              remindData.name = card.name
-              remindData.due = due.format("YYYY/MM/DD h:mm A")
-              remindData.member = getMemberNameByID(card.idMembers[0])
-              msg = createMsg(remindData)
-
-              robot.send(envelope, mention + msg)
+              msg = createMsg3(card, due)
+              robot.send(envelope, msg)
     )
-    cronJob.start()
+    cronJobHourly.start()
   ```
 
+   - trello の API のリファレンスはこちら
+      - https://developers.trello.com/reference
    - 環境変数
+      - HUBOT_SLACK_CHANNEL : 通知先の slack の チャンネル
       - HUBOT_TRELLO_KEY : trello の API key
      - HUBOT_TRELLO_TOKEN : trello の token
      - HUBOT_TRELLO_ORGANIZATION : trello の team の id
-     - HUBOT_SLACK_CHANNEL : 通知先の slack の チャンネル
-     - HUBOT_TRELLO_JOB_LIST_ID : Todo:あとで board に変更
-     - HUBOT_TRELLO_CRON : 通知の間隔 秒からの cron 書式
+     - HUBOT_TRELLO_BOARD_JD : 通知対象の board の id
   - ポイント
     - node-trello の各メソッドは非同期コールバックなので逐次的には書けない
     - card の 担当者リスト（idMembers） には id しか入っていないので名前を引くには member API から username を引く必要がある
+    - moment による日付/時間の操作
+      - https://qiita.com/taizo/items/3a5505308ca2e303c099
+      - https://app.codegrid.net/entry/momentjs
+    - 日本時間が9時間足すしか分からなかった。。
+    - 対象 board の全 card が対象になっているのでフィルタしないと。
 
  -  dockerfile を修正する
 
@@ -183,7 +237,7 @@
  -  環境変数を渡す形で docker run する
 
     ```shell
-    $ docker run --rm -e "HUBOT_SLACK_TOKEN=<slaktoken>" -e "HUBOT_TRELLO_KEY=<apikey>" -e "HUBOT_TRELLO_TOKEN=<trellotoken>" -e "HUBOT_TRELLO_ORGANIZATION=<teamid>" -e "HUBOT_TRELLO_JOB_LIST_ID=<listid>" -e "HUBOT_TRELLO_CRON=*/30 * * * * *" --name trello -d ma1979/trello-hubot
+    $ docker run --rm -e "HUBOT_SLACK_TOKEN=<slaktoken>" -e "HUBOT_SLACK_CHANNEL=<channel>" -e "HUBOT_TRELLO_KEY=<apikey>" -e "HUBOT_TRELLO_TOKEN=<trellotoken>" -e "HUBOT_TRELLO_ORGANIZATION=<teamid>" -e "HUBOT_TRELLO_BOARD_ID=<boardid>" -e --name trello -d ma1979/trello-hubot
     ```
 
 - docker pull する
