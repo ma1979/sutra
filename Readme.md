@@ -6,6 +6,8 @@
 
 ---
 ## [20171202_Hubot-Trello](https://github.com/ma1979/sutra/blob/master/20171202_Hubot-Trello/memo.md)
+- trello の期限付きカードの通知を hubot から slack に通知させる coffee script を作成し、hubot - slack の docker image を作成する
+
 
 ---
 ## [20171202_BingSpeechAPI](https://github.com/ma1979/sutra/blob/master/20171202_BingSpeechAPI/memo.md) 途中
