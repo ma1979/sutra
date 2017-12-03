@@ -237,7 +237,7 @@
  -  環境変数を渡す形で docker run する
 
     ```shell
-    $ docker run --rm -e "HUBOT_SLACK_TOKEN=<slaktoken>" -e "HUBOT_SLACK_CHANNEL=<channel>" -e "HUBOT_TRELLO_KEY=<apikey>" -e "HUBOT_TRELLO_TOKEN=<trellotoken>" -e "HUBOT_TRELLO_ORGANIZATION=<teamid>" -e "HUBOT_TRELLO_BOARD_ID=<boardid>" -e --name trello -d ma1979/trello-hubot
+    $ docker run --rm -e "HUBOT_SLACK_TOKEN=<slaktoken>" -e "HUBOT_SLACK_CHANNEL=<channel>" -e "HUBOT_TRELLO_KEY=<apikey>" -e "HUBOT_TRELLO_TOKEN=<trellotoken>" -e "HUBOT_TRELLO_ORGANIZATION=<teamid>" -e "HUBOT_TRELLO_BOARD_ID=<boardid>" --name trello -d ma1979/trello-hubot
     ```
 
 - docker pull する
