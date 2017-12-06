@@ -115,8 +115,14 @@
       Provides    : libXtst.so.6
       ```
 
-      ```
+      ```docker file
       RUN yum -y install libXtst
+      ```
+
+    - electron でエラーが出ないところまで来たのでいったん docker push
+
+      ```shell
+      $ docker push ma1979/nightmare-hubot
       ```
 
       ​
