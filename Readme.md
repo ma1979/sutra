@@ -5,6 +5,10 @@
   - https://hub.docker.com/u/ma1979/
 
 ---
+## [20171207_nightmare](https://github.com/ma1979/sutra/blob/master/20171207_nightmare/CentOS%20Image%20%E3%81%AB%20node%20%2B%20electron%20%2B%20nightmare%20%E7%92%B0%E5%A2%83%E3%82%92%E4%BD%9C%E3%82%8B.md)
+- CentOS Image に node + electron + nightmare + hubot 環境を作る
+
+---
 ## [20171202_Hubot-Trello](https://github.com/ma1979/sutra/blob/master/20171202_Hubot-Trello/memo.md)
 - trello の期限付きカードの通知を hubot から slack に通知させる coffee script を作成し、hubot - slack の docker image を作成する
 
