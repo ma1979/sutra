@@ -21,6 +21,11 @@
 
   RUN yum -y install xorg-x11-server-Xvfb "xorg-x11-fonts*"
   RUN yum -y groupinstall "Japanese Support"
+  RUN yum -y install gtk2
+  RUN yum -y install libXtst
+  RUN yum -y install libXScrnSaver
+  RUN yum -y install GConf2
+  RUN yum -y install alsa-lib
 
   RUN npm install coffee-script
   RUN npm install -g yo generator-hubot
@@ -40,8 +45,7 @@
 
   RUN echo "#!/bin/bash" > /home/bot/run_hubot.sh
   RUN echo "bin/hubot --adapter lets-chat" >> /home/bot/run_hubot.sh
-
-  ADD ./example.js ~/
+  ADD ./example.js /home/bot
   RUN chmod 777 /home/bot/run_hubot.sh
 
   CMD cd /home/bot; sh run_hubot.sh
@@ -81,7 +85,6 @@
     - こんなエラーが出る場合は、
 
       ```shell
-      $ DEBUG=* node example.js
         nightmare queuing process start +0ms
         nightmare queueing action "goto" for http://yahoo.com +8ms
         nightmare queueing action "type" +4ms
