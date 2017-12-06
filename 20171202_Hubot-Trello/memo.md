@@ -1,4 +1,4 @@
-# trello の期限付きカードの通知を x 時間、y 分前に hubot から slack に通知させる coffee script を作成し、hubot - slack の docker image を作成する
+# trello の期限付きカードの通知を毎日朝と x時間毎に hubot から slack に通知させる coffee script を作成し、hubot - slack の docker image を作成する
 
 - 写経元
 
