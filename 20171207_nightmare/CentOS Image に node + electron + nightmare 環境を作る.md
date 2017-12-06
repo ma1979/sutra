@@ -78,4 +78,42 @@
     $ DEBUG=* node example.js
     ```
 
-    ​
+    - こんなエラーが出る場合は、
+
+      ```shell
+      $ DEBUG=* node example.js
+        nightmare queuing process start +0ms
+        nightmare queueing action "goto" for http://yahoo.com +8ms
+        nightmare queueing action "type" +4ms
+        nightmare queueing action "click" +0ms
+        nightmare queueing action "wait" +1ms
+        nightmare queueing action "evaluate" +0ms
+        nightmare running +1ms
+        electron:stderr /home/bot/node_modules/electron/dist/electron: error while loading shared libraries: libXtst.so.6: cannot open shared object file: No such file or directory +62ms
+        nightmare electron child process exited with code 127: command not found - you may not have electron installed correctly +8ms
+        nightmare electron child process not started yet, skipping kill. +2ms
+      ```
+
+    - 足りないファイルのパッケージを調べて yum install を dockerfile に足す
+
+      ```
+      $ yum provides libXtst.so.6
+      Loaded plugins: fastestmirror, ovl
+      ovl: Error while doing RPMdb copy-up:
+      [Errno 13] Permission denied: '/var/lib/rpm/Obsoletename'
+      Determining fastest mirrors
+       * base: ftp.iij.ad.jp
+       * epel: ftp.riken.jp
+       * extras: ftp.iij.ad.jp
+       * updates: ftp.iij.ad.jp
+      libXtst-1.2.3-1.el7.i686 : X.Org X11 libXtst runtime library
+      Repo        : base
+      Matched from:
+      Provides    : libXtst.so.6
+      ```
+
+      ```
+      RUN yum -y install libXtst
+      ```
+
+      ​
