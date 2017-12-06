@@ -47,4 +47,35 @@
   CMD cd /home/bot; sh run_hubot.sh
   ```
 
-  ​
+- electron + nightmare のサンプルを動かす
+
+  - サンプル
+
+    ```javascript
+    var Nightmare = require('nightmare');
+    var nightmare = Nightmare({ show: true });
+
+    nightmare
+      .goto('http://yahoo.com')
+      .type('form[action*="/search"] [name=p]', 'github nightmare')
+      .click('form[action*="/search"] [type=submit]')
+      .wait('#main')
+      .evaluate(function () {
+        return document.querySelector('#main .searchCenterMiddle li a').href
+      })
+      .end()
+      .then(function (result) {
+        console.log(result)
+      })
+      .catch(function (error) {
+        console.error('Search failed:', error);
+      });
+    ```
+
+  - デバッグ実行
+
+    ```shell
+    $ DEBUG=* node example.js
+    ```
+
+    ​
