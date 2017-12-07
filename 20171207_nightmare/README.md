@@ -119,6 +119,18 @@
       RUN yum -y install libXtst
       ```
 
+      - 参考
+        - https://labs.oratta.net/2017/01/888/
+
+    - デバッグ実行は xvfb-run 越しで動作するのが正解みたい
+
+      ```shell
+      $ xvfb-run node example.js
+      ```
+
+      - なにやらエラーが出るのでこの対応
+        - http://abc.tnxv.me/post/50988759673/which-no-xauth-in-null-xvfb-run-error-xauth
+
     - electron でエラーが出ないところまで来たのでいったん docker push
 
       ```shell
