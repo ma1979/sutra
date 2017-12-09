@@ -3,6 +3,10 @@
 - もろもろの Image はこちら
 
   - https://hub.docker.com/u/ma1979/
+  
+---
+## [20171209_bluemix_hubot](https://github.com/ma1979/sutra/tree/master/20171209_bluemix_hubot)
+- hubot を IBM Cloud（旧bluemix） の無料枠（ライト・プラン）で動かす
 
 ---
 ## [20171207_nightmare](https://github.com/ma1979/sutra/blob/master/20171207_nightmare/README.md)
