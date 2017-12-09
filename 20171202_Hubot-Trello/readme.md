@@ -243,9 +243,7 @@
 
 - docker push する
 
-  - ```shell
-    $ docker push ma1979/trello-hubot
-    ```
-
-  - s
+  ```shell
+  $ docker push ma1979/trello-hubot
+  ```
 
