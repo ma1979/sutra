@@ -20,7 +20,6 @@
 
   ![](https://github.com/ma1979/sutra/raw/master/20171209_bluemix_hubot/img/%E3%82%AB%E3%82%BF%E3%83%AD%E3%82%AF%E3%82%99%20-%20IBM%20Cloud%20%F0%9F%94%8A%202017-12-09%2018-21-55.png)
 
-  - Kubernetes は難しそうなので...
 
 - 始めに を押す
 
