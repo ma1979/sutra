@@ -6,7 +6,7 @@
   
 ---
 ## [20171216_line_bot](https://github.com/ma1979/sutra/tree/master/20171216_line_bot)
--- LINE bot を動かす
+- LINE bot を動かす
 
 ---
 ## [20171209_bluemix_hubot](https://github.com/ma1979/sutra/tree/master/20171209_bluemix_hubot)
