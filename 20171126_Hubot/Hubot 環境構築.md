@@ -211,3 +211,5 @@
     ```
 
     - ![push](https://raw.githubusercontent.com/ma1979/sutra/master/20171126_Hubot/cap/ma1979%20-%20Docker%20Hub%202017-11-26%2007-54-46.png)
+    
+    - image の名称を ma1979/slack-bot に変えた
