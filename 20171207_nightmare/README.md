@@ -131,7 +131,159 @@
       - なにやらエラーが出るのでこの対応
         - http://abc.tnxv.me/post/50988759673/which-no-xauth-in-null-xvfb-run-error-xauth
 
-    - electron でエラーが出ないところまで来たのでいったん docker push
+    - というのも間違いで、先に Xvfb を起動させておくのが正解みたい
+
+      ```shell
+      #!/usr/bin/env bash
+      set -e
+
+      # Start Xvfb
+      Xvfb :1 -screen 0 1024x768x24 > /dev/null &
+      export DISPLAY=:1
+
+      exec "$@"
+      ```
+
+      - これを Entrypoint にする
+
+    - さらに、Xvfb を起動させるのに Dbus の ID とやらも必要
+
+      ```shell
+      $ dbus-uuidgen > /var/lib/dbus/machine-id
+      ```
+
+
+    - いったん hubot やら何やらをなくして、erectorn + nightmare で必要なものだけを残した dockerfile にすると、
+
+      ```dockerfile
+      FROM centos
+      MAINTAINER ma1979
+
+      ENV TZ=Asia/Tokyo
+
+      # 日本語
+      RUN rm -f /etc/rpm/macros.image-language-conf && \
+          sed -i '/^override_install_langs=/d' /etc/yum.conf && \
+          yum -y reinstall glibc-common && \
+          yum clean all
+
+      ENV LANG="ja_JP.UTF-8" \
+          LANGUAGE="ja_JP:ja" \
+          LC_ALL="ja_JP.UTF-8"
+
+      RUN yum -y update && yum -y install epel-release
+
+      RUN yum -y install nodejs
+      RUN yum -y install npm
+      RUN yum -y install git wget
+
+      # nightmare electron
+      RUN yum -y install xorg-x11-server-Xvfb xorg-x11-fonts*
+      RUN yum -y groupinstall "Japanese Support"
+      RUN yum -y install gtk2
+      RUN yum -y install atk
+      RUN yum -y install pango
+      RUN yum -y install gdk-pixbuf2
+      RUN yum -y install libXrandr
+      RUN yum -y install GConf2
+      RUN yum -y install libXcursor
+      RUN yum -y install libXcomposite
+      RUN yum -y install libnotify
+      RUN yum -y install libXtst
+      RUN yum -y install cups-libs
+      RUN yum -y install glib2-devel
+      RUN yum -y install libXScrnSaver
+      RUN yum -y install alsa-lib
+      RUN yum -y install dbus
+      RUN yum clean all
+
+      # Xvfb用
+      RUN dbus-uuidgen > /var/lib/dbus/machine-id
+      COPY entrypoint.sh /entrypoint
+      RUN chmod +x /entrypoint
+
+      # サンプル
+      RUN mkdir /home/node
+      ADD ./example.js /home/node
+
+      WORKDIR /home/node
+      RUN npm install electron nightmare
+
+      ENTRYPOINT ["/entrypoint"]
+      ```
+
+    - example.js はこんな感じに変更
+
+      ```javascript
+
+      const Nightmare = require('nightmare');
+      const nightmare = Nightmare({
+          show: true,
+          width: 1024, // 初期のブラウザ幅
+          height: 768, // 初期のブラウザ高さ
+          enableLargerThanScreen: true // ブラウザを画面より大きく出来るか
+      });
+
+      // Yahooにアクセス、ENDLABで検索
+      const yahooSearch = () => {
+          return new Promise((resolve, reject) => {
+              nightmare
+                  .goto('http://yahoo.co.jp')
+                  .wait('#srchtxt')
+                  .insert('#srchtxt', 'ENDLAB')
+                  .click('#srchbtn')
+                  .wait('#mIn')
+                  .evaluate(() => {
+                      var body = document.querySelector('body');
+
+                      // 背景を白に
+                      body.style.backgroundColor = '#fff';
+
+                      // ページ全体の幅と高さを返す
+                      return {
+                          width: body.scrollWidth + (window.outerWidth - window.innerWidth),
+                          height: body.scrollHeight + (window.outerHeight - window.innerHeight)
+                      };
+                  })
+                  .then((result) => {
+                      resolve(result);
+                  });
+          });
+      }
+
+      // 現在のページをスクリーンショット保存
+      const screenShot = (r) => {
+          return new Promise((resolve, reject) => {
+              nightmare
+                  .viewport(r.width, r.height)
+                  .wait(1000)
+                  .screenshot('./screenshot.png')
+                  .then(() => {
+                      resolve(nightmare.end());
+                  });
+          });
+      }
+
+      // 実行開始
+      yahooSearch()
+          .then((r) => {
+              screenShot(r);
+          });
+      ```
+
+    - これで docker build してコンテナ上で example.js を実行してみると
+
+      ```shell
+      $ node example.js
+      $ ls
+      example.js  node_modules  screenshot.png
+      ```
+
+      - screenshot.png ができた。文字化けしてるけどまあ成功
+
+        ![cap](./img/screenshot.png)
+
+    - この時点でひとまず docker push
 
       ```shell
       $ docker push ma1979/nightmare-hubot
