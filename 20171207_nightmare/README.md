@@ -292,7 +292,7 @@
     - この時点でひとまず docker push
 
       ```shell
-      $ docker push ma1979/nightmare-hubot
+      $ docker push ma1979/nightmare
       ```
 
       ​
