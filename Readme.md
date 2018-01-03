@@ -5,6 +5,10 @@
   - https://hub.docker.com/u/ma1979/
   
 ---
+## [20171216_line_bot](https://github.com/ma1979/sutra/tree/master/20171216_line_bot)
+- LINE bot を動かす
+
+---
 ## [20171209_bluemix_hubot](https://github.com/ma1979/sutra/tree/master/20171209_bluemix_hubot)
 - hubot を IBM Cloud（旧bluemix） の無料枠（ライト・プラン）で動かす
 
