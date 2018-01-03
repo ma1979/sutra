@@ -283,6 +283,12 @@
 
         ![cap](./img/screenshot.png)
 
+    - 文字化けはこれで解決
+
+      ```shell
+      $ yum install -y ipa-*-fonts
+      ```
+
     - この時点でひとまず docker push
 
       ```shell
