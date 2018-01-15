@@ -1,0 +1,6 @@
+FROM php
+MAINTAINER ma1979
+
+RUN apt-get update && apt-get install -y vim
+
+WORKDIR /home/camera
